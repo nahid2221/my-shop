@@ -1796,6 +1796,26 @@ if (modalPlus) {
 }
 
 
+/* =====================================================
+   PRODUCT DETAILS BUTTON FIX
+   ===================================================== */
+
+document.addEventListener("click", function (event) {
+
+    const button =
+        event.target.closest(".add-cart");
+
+    if (!button) return;
+
+    const productId =
+        Number(button.dataset.id);
+
+    if (!productId) return;
+
+    openProductModal(productId);
+
+});
+
 if (modalAddCart) {
 
     modalAddCart.addEventListener(
