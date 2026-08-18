@@ -1558,3 +1558,485 @@ a:focus-visible {
     }
 
 }
+
+
+
+/* =====================================================
+   VENDAVIBE — WHATSAPP ORDER MODAL
+   ===================================================== */
+
+.order-modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 4000;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: 0.3s ease;
+
+    backdrop-filter: blur(6px);
+}
+
+
+.order-modal.active {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+/* =====================================================
+   ORDER MODAL CONTENT
+   ===================================================== */
+
+.order-modal-content {
+    width: min(520px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 26px;
+
+    padding: 30px;
+
+    position: relative;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.25);
+
+    transform:
+        translateY(25px)
+        scale(0.97);
+
+    transition: 0.3s ease;
+}
+
+
+.order-modal.active
+.order-modal-content {
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+
+/* =====================================================
+   CLOSE BUTTON
+   ===================================================== */
+
+.order-close {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    width: 40px;
+
+    height: 40px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f2f2f2;
+
+    color: #333;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    z-index: 5;
+}
+
+
+.order-close:hover {
+
+    background: #111;
+
+    color: #fff;
+
+    transform: rotate(90deg);
+
+}
+
+
+/* =====================================================
+   ORDER HEADER
+   ===================================================== */
+
+.order-header {
+
+    text-align: center;
+
+    padding:
+        10px
+        20px
+        25px;
+}
+
+
+.order-icon {
+
+    width: 65px;
+
+    height: 65px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    border-radius: 20px;
+
+    background: #f1f1f1;
+
+    font-size: 32px;
+}
+
+
+.order-header h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 26px;
+
+    line-height: 1.2;
+}
+
+
+.order-header p {
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   FORM
+   ===================================================== */
+
+#orderForm {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 17px;
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.form-group label {
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    color: #222;
+}
+
+
+.form-group input,
+.form-group textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #e1e1e1;
+
+    background: #fafafa;
+
+    border-radius: 13px;
+
+    padding:
+        13px
+        14px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: 0.2s ease;
+}
+
+
+.form-group input {
+
+    min-height: 48px;
+}
+
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 90px;
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    border-color: #111;
+
+    background: #fff;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0, 0, 0, 0.05);
+}
+
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+
+    color: #aaa;
+}
+
+
+/* =====================================================
+   ORDER SUMMARY
+   ===================================================== */
+
+.order-summary {
+
+    background: #f7f7f7;
+
+    border-radius: 16px;
+
+    padding: 16px;
+
+    margin-top: 3px;
+}
+
+
+.order-summary-title {
+
+    font-size: 13px;
+
+    font-weight: 900;
+
+    margin-bottom: 10px;
+}
+
+
+.order-summary-item {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 7px 0;
+
+    border-bottom: 1px solid #e5e5e5;
+
+    font-size: 13px;
+}
+
+
+.order-summary-item:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.order-summary-total {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-top: 12px;
+
+    padding-top: 12px;
+
+    border-top: 2px solid #ddd;
+
+    font-size: 16px;
+
+    font-weight: 900;
+}
+
+
+/* =====================================================
+   WHATSAPP BUTTON
+   ===================================================== */
+
+.whatsapp-order-btn {
+
+    width: 100%;
+
+    min-height: 52px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #111;
+
+    color: #fff;
+
+    font-size: 15px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+
+    margin-top: 3px;
+}
+
+
+.whatsapp-order-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0, 0, 0, 0.18);
+}
+
+
+.whatsapp-order-btn:active {
+
+    transform: translateY(0);
+
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    .order-modal {
+
+        padding: 10px;
+
+        align-items: flex-end;
+
+    }
+
+
+    .order-modal-content {
+
+        width: 100%;
+
+        max-height: 94vh;
+
+        border-radius:
+            24px
+            24px
+            0
+            0;
+
+        padding:
+            25px
+            18px
+            25px;
+
+        transform:
+            translateY(100%);
+
+    }
+
+
+    .order-modal.active
+    .order-modal-content {
+
+        transform:
+            translateY(0);
+
+    }
+
+
+    .order-header {
+
+        padding:
+            5px
+            15px
+            20px;
+
+    }
+
+
+    .order-header h2 {
+
+        font-size: 23px;
+
+    }
+
+
+    .order-icon {
+
+        width: 55px;
+
+        height: 55px;
+
+        font-size: 27px;
+
+        border-radius: 17px;
+
+    }
+
+
+    .form-group input {
+
+        min-height: 46px;
+
+    }
+
+}
