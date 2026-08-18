@@ -365,7 +365,103 @@
 <!-- ================= SCRIPT ================= -->
 
 <script src="script.js"></script>
+<!-- ================= PRODUCT DETAILS MODAL ================= -->
 
+<div class="product-modal" id="productModal">
+
+    <div class="product-modal-content">
+
+        <button
+            class="modal-close"
+            id="closeProductModal">
+            ×
+        </button>
+
+        <div
+            class="modal-product-image"
+            id="modalProductImage">
+        </div>
+
+        <div class="modal-product-info">
+
+            <span
+                class="product-category"
+                id="modalProductCategory">
+            </span>
+
+            <h2 id="modalProductName">
+                Product Name
+            </h2>
+
+            <div
+                class="modal-price"
+                id="modalProductPrice">
+                ৳0
+            </div>
+
+            <div
+                class="modal-stock"
+                id="modalProductStock">
+            </div>
+
+            <p
+                class="modal-description"
+                id="modalProductDescription">
+            </p>
+
+            <div class="quantity-section">
+
+                <span>
+                    Quantity
+                </span>
+
+                <div class="quantity-control">
+
+                    <button
+                        id="modalMinus">
+                        −
+                    </button>
+
+                    <span
+                        id="modalQuantity">
+                        1
+                    </span>
+
+                    <button
+                        id="modalPlus">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="modal-actions">
+
+                <button
+                    class="modal-cart-btn"
+                    id="modalAddCart">
+
+                    🛒 Add to Cart
+
+                </button>
+
+                <button
+                    class="modal-order-btn"
+                    id="modalOrder">
+
+                    📱 Order Now
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+    
 </body>
 
 </html>
