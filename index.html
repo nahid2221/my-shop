@@ -461,7 +461,106 @@
     </div>
 
 </div>
-    
+
+<!-- ================= ORDER MODAL ================= -->
+
+<div class="order-modal" id="orderModal">
+
+    <div class="order-modal-content">
+
+        <button
+            class="order-close"
+            id="closeOrderModal">
+            ×
+        </button>
+
+        <div class="order-header">
+
+            <span class="order-icon">
+                🛍️
+            </span>
+
+            <h2>
+                Complete Your Order
+            </h2>
+
+            <p>
+                Enter your information to place your order.
+            </p>
+
+        </div>
+
+
+        <form id="orderForm">
+
+            <div class="form-group">
+
+                <label for="customerName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="customerPhone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    placeholder="01XXXXXXXXX"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="customerAddress">
+                    Delivery Address
+                </label>
+
+                <textarea
+                    id="customerAddress"
+                    rows="3"
+                    placeholder="House, Road, Area, District"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <div
+                class="order-summary"
+                id="orderSummary">
+            </div>
+
+
+            <button
+                type="submit"
+                class="whatsapp-order-btn">
+
+                📱 Order via WhatsApp
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>    
+
 </body>
 
 </html>
