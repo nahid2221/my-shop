@@ -1,0 +1,360 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f8;
+    color: #171717;
+}
+
+.header {
+    height: 70px;
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 6%;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.search-btn,
+.cart-btn {
+    border: none;
+    background: #f3f3f3;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.cart-btn {
+    position: relative;
+}
+
+#cartCount {
+    position: absolute;
+
+    top: -4px;
+    right: -4px;
+
+    background: #ff3b30;
+    color: white;
+
+    width: 19px;
+    height: 19px;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.hero {
+    margin: 20px auto;
+
+    width: 88%;
+    max-width: 1200px;
+
+    min-height: 360px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #3b3b3b
+        );
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+
+    padding: 50px;
+
+    overflow: hidden;
+}
+
+.hero-content {
+    max-width: 550px;
+}
+
+.hero-small {
+    font-size: 13px;
+    letter-spacing: 2px;
+    opacity: .7;
+}
+
+.hero h1 {
+    font-size: clamp(40px, 7vw, 70px);
+    line-height: 1.05;
+    margin: 15px 0;
+}
+
+.hero p {
+    font-size: 17px;
+    opacity: .8;
+    margin-bottom: 25px;
+}
+
+.shop-btn {
+    border: none;
+
+    background: white;
+    color: #111;
+
+    padding: 14px 25px;
+
+    border-radius: 30px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.categories,
+.products {
+    width: 88%;
+    max-width: 1200px;
+
+    margin: 35px auto;
+}
+
+.section-title {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.section-title h2 {
+    font-size: 24px;
+}
+
+.section-title span {
+    font-size: 14px;
+    color: #666;
+
+    cursor: pointer;
+}
+
+
+.category-list {
+    display: flex;
+
+    gap: 10px;
+
+    overflow-x: auto;
+
+    padding-bottom: 8px;
+}
+
+.category {
+    border: none;
+
+    background: white;
+
+    padding: 12px 18px;
+
+    border-radius: 30px;
+
+    white-space: nowrap;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.category.active {
+    background: #111;
+    color: white;
+}
+
+
+.product-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+.product-card {
+    background: white;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 25px rgba(0,0,0,.06);
+
+    transition: .3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    height: 230px;
+
+    background: #f1f1f1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 70px;
+}
+
+.product-info {
+    padding: 18px;
+}
+
+.product-category {
+    font-size: 12px;
+    color: #777;
+}
+
+.product-info h3 {
+    margin: 7px 0;
+    font-size: 18px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: 800;
+
+    margin-bottom: 15px;
+}
+
+.add-cart {
+    width: 100%;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #111;
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+footer {
+    margin-top: 60px;
+
+    padding: 40px 20px;
+
+    background: #111;
+
+    color: white;
+
+    text-align: center;
+}
+
+footer p {
+    margin-top: 8px;
+
+    color: #aaa;
+}
+
+
+@media (max-width: 700px) {
+
+    .header {
+        padding: 0 5%;
+    }
+
+    .hero {
+        width: 92%;
+
+        min-height: 400px;
+
+        padding: 30px;
+
+        border-radius: 22px;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+    .categories,
+    .products {
+        width: 92%;
+    }
+
+    .product-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 12px;
+    }
+
+    .product-image {
+        height: 170px;
+        font-size: 50px;
+    }
+
+    .product-info {
+        padding: 13px;
+    }
+
+    .product-info h3 {
+        font-size: 15px;
+    }
+
+    .price {
+        font-size: 17px;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
