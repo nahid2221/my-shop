@@ -1,65 +1,140 @@
 /* =====================================================
-   VENDAVIBE — PRODUCT + CART + DETAILS SYSTEM
+   VENDAVIBE
+   PRODUCT + CART + DETAILS + WHATSAPP ORDER
    ===================================================== */
 
 
-/* ================= PRODUCT DATA ================= */
+/* =====================================================
+   STORE SETTINGS
+   ===================================================== */
+
+const STORE_NAME = "VendaVibe";
+
+/*
+   IMPORTANT:
+   এখানে তোমার WhatsApp Business/Personal নম্বর দেবে।
+
+   Bangladesh country code = 880
+
+   Example:
+   01712345678
+   becomes:
+   8801712345678
+
+   শুধু সংখ্যা রাখবে।
+*/
+
+const WHATSAPP_NUMBER = "8801603560026";
+
+
+/* DELIVERY CHARGE */
+
+const DELIVERY_CHARGE = {
+
+    insideDhaka: 80,
+
+    outsideDhaka: 150
+
+};
+
+
+/* =====================================================
+   PRODUCT DATABASE
+   ===================================================== */
 
 const products = [
 
     {
         id: 1,
+
         name: "Premium T-Shirt",
+
         category: "Fashion",
+
         buyPrice: 400,
+
         sellPrice: 650,
+
         stock: 25,
+
         image: "",
+
         description:
             "Premium quality comfortable cotton T-Shirt. Perfect for everyday wear.",
-        supplier: "Demo Fashion Supplier",
-        supplierPhone: "01XXXXXXXXX"
+
+        supplier:
+            "Demo Fashion Supplier",
+
+        supplierPhone:
+            "01XXXXXXXXX"
     },
+
 
     {
         id: 2,
+
         name: "Beauty Product",
+
         category: "Cosmetics",
+
         buyPrice: 280,
+
         sellPrice: 450,
+
         stock: 18,
+
         image: "",
+
         description:
             "Beautiful everyday beauty product with a simple and elegant design.",
-        supplier: "Demo Cosmetics Supplier",
-        supplierPhone: "01XXXXXXXXX"
+
+        supplier:
+            "Demo Cosmetics Supplier",
+
+        supplierPhone:
+            "01XXXXXXXXX"
     },
+
 
     {
         id: 3,
+
         name: "Cute Mini Toy",
+
         category: "Toys",
+
         buyPrice: 180,
+
         sellPrice: 300,
+
         stock: 30,
+
         image: "",
+
         description:
             "Cute and fun mini toy that children will love.",
-        supplier: "Demo Toy Supplier",
-        supplierPhone: "01XXXXXXXXX"
+
+        supplier:
+            "Demo Toy Supplier",
+
+        supplierPhone:
+            "01XXXXXXXXX"
     }
 
 ];
 
 
-/* ================= VARIABLES ================= */
+/* =====================================================
+   VARIABLES
+   ===================================================== */
 
 let cart =
     JSON.parse(
         localStorage.getItem(
-            "vendavibeCart"
+            "vendaviveCart"
         )
     ) || [];
+
 
 let selectedCategory = "All";
 
@@ -70,7 +145,9 @@ let selectedProduct = null;
 let modalQuantity = 1;
 
 
-/* ================= DOM ================= */
+/* =====================================================
+   DOM ELEMENTS
+   ===================================================== */
 
 const productGrid =
     document.getElementById(
@@ -158,7 +235,9 @@ const checkoutBtn =
     );
 
 
-/* ================= PRODUCT MODAL DOM ================= */
+/* =====================================================
+   PRODUCT MODAL
+   ===================================================== */
 
 const productModal =
     document.getElementById(
@@ -226,7 +305,49 @@ const modalOrder =
     );
 
 
-/* ================= PRICE ================= */
+/* =====================================================
+   ORDER MODAL
+   ===================================================== */
+
+const orderModal =
+    document.getElementById(
+        "orderModal"
+    );
+
+const closeOrderModal =
+    document.getElementById(
+        "closeOrderModal"
+    );
+
+const orderForm =
+    document.getElementById(
+        "orderForm"
+    );
+
+const customerName =
+    document.getElementById(
+        "customerName"
+    );
+
+const customerPhone =
+    document.getElementById(
+        "customerPhone"
+    );
+
+const customerAddress =
+    document.getElementById(
+        "customerAddress"
+    );
+
+const orderSummary =
+    document.getElementById(
+        "orderSummary"
+    );
+
+
+/* =====================================================
+   PRICE FORMAT
+   ===================================================== */
 
 function formatPrice(price) {
 
@@ -240,18 +361,23 @@ function formatPrice(price) {
 }
 
 
-/* ================= CATEGORIES ================= */
+/* =====================================================
+   CATEGORIES
+   ===================================================== */
 
 function getCategories() {
 
     return [
+
         "All",
+
         ...new Set(
             products.map(
                 product =>
                     product.category
             )
         )
+
     ];
 
 }
@@ -261,6 +387,7 @@ function renderCategories() {
 
     categoryList.innerHTML = "";
 
+
     getCategories().forEach(
         category => {
 
@@ -269,8 +396,10 @@ function renderCategories() {
                     "button"
                 );
 
+
             button.className =
                 "category";
+
 
             if (
                 category ===
@@ -283,10 +412,12 @@ function renderCategories() {
 
             }
 
+
             button.textContent =
                 category === "All"
                     ? "✨ All"
                     : category;
+
 
             button.addEventListener(
                 "click",
@@ -302,6 +433,7 @@ function renderCategories() {
                 }
             );
 
+
             categoryList.appendChild(
                 button
             );
@@ -312,7 +444,9 @@ function renderCategories() {
 }
 
 
-/* ================= FILTER ================= */
+/* =====================================================
+   FILTER PRODUCTS
+   ===================================================== */
 
 function getFilteredProducts() {
 
@@ -325,22 +459,28 @@ function getFilteredProducts() {
                 product.category ===
                     selectedCategory;
 
+
             const text =
                 searchTerm
                     .toLowerCase()
                     .trim();
 
+
             const searchMatch =
                 !text ||
+
                 product.name
                     .toLowerCase()
                     .includes(text) ||
+
                 product.category
                     .toLowerCase()
                     .includes(text) ||
+
                 product.description
                     .toLowerCase()
                     .includes(text);
+
 
             return (
                 categoryMatch &&
@@ -353,17 +493,22 @@ function getFilteredProducts() {
 }
 
 
-/* ================= RENDER PRODUCTS ================= */
+/* =====================================================
+   RENDER PRODUCTS
+   ===================================================== */
 
 function renderProducts() {
 
     const list =
         getFilteredProducts();
 
+
     productGrid.innerHTML = "";
+
 
     productCount.textContent =
         `${list.length} Products`;
+
 
     noProducts.hidden =
         list.length !== 0;
@@ -376,6 +521,7 @@ function renderProducts() {
                 document.createElement(
                     "article"
                 );
+
 
             card.className =
                 "product-card";
@@ -402,6 +548,7 @@ function renderProducts() {
 
             let stockText;
 
+
             if (
                 product.stock <= 0
             ) {
@@ -409,14 +556,18 @@ function renderProducts() {
                 stockText =
                     "Out of stock";
 
-            } else if (
+            }
+
+            else if (
                 product.stock <= 5
             ) {
 
                 stockText =
                     `Only ${product.stock} left`;
 
-            } else {
+            }
+
+            else {
 
                 stockText =
                     `${product.stock} in stock`;
@@ -444,7 +595,9 @@ function renderProducts() {
 
 
                     <h3>
+
                         ${product.name}
+
                     </h3>
 
 
@@ -468,6 +621,7 @@ function renderProducts() {
                                 )}
 
                             </div>
+
 
                             <span class="stock">
 
@@ -537,7 +691,7 @@ function renderProducts() {
 
 
 /* =====================================================
-   PRODUCT DETAILS MODAL
+   PRODUCT DETAILS
    ===================================================== */
 
 function openProductModal(
@@ -550,11 +704,18 @@ function openProductModal(
                 item.id === productId
         );
 
-    if (!product) return;
 
-    selectedProduct = product;
+    if (!product)
+        return;
 
-    modalQuantity = 1;
+
+    selectedProduct =
+        product;
+
+
+    modalQuantity =
+        1;
+
 
     modalQuantityElement.textContent =
         modalQuantity;
@@ -563,35 +724,23 @@ function openProductModal(
     modalProductCategory.textContent =
         product.category;
 
+
     modalProductName.textContent =
         product.name;
+
 
     modalProductPrice.textContent =
         formatPrice(
             product.sellPrice
         );
 
+
     modalProductDescription.textContent =
         product.description;
 
 
-    if (
-        product.stock <= 0
-    ) {
-
-        modalProductStock.textContent =
-            "Out of stock";
-
-        modalAddCart.disabled = true;
-
-    } else {
-
-        modalProductStock.textContent =
-            `${product.stock} in stock`;
-
-        modalAddCart.disabled = false;
-
-    }
+    modalProductStock.textContent =
+        `${product.stock} in stock`;
 
 
     if (product.image) {
@@ -605,7 +754,9 @@ function openProductModal(
 
         `;
 
-    } else {
+    }
+
+    else {
 
         modalProductImage.innerHTML = `
 
@@ -625,6 +776,7 @@ function openProductModal(
         "active"
     );
 
+
     document.body.style.overflow =
         "hidden";
 
@@ -637,15 +789,20 @@ function closeProductDetails() {
         "active"
     );
 
+
     document.body.style.overflow =
         "";
 
-    selectedProduct = null;
+
+    selectedProduct =
+        null;
 
 }
 
 
-/* ================= MODAL CLOSE ================= */
+/* =====================================================
+   MODAL EVENTS
+   ===================================================== */
 
 closeProductModal.addEventListener(
     "click",
@@ -669,8 +826,6 @@ productModal.addEventListener(
     }
 );
 
-
-/* ================= MODAL QUANTITY ================= */
 
 modalMinus.addEventListener(
     "click",
@@ -709,7 +864,9 @@ modalPlus.addEventListener(
             modalQuantityElement.textContent =
                 modalQuantity;
 
-        } else {
+        }
+
+        else {
 
             alert(
                 "Maximum available stock reached."
@@ -721,7 +878,84 @@ modalPlus.addEventListener(
 );
 
 
-/* ================= MODAL ADD CART ================= */
+/* =====================================================
+   CART FUNCTIONS
+   ===================================================== */
+
+function addMultipleToCart(
+    productId,
+    quantity
+) {
+
+    const product =
+        products.find(
+            item =>
+                item.id === productId
+        );
+
+
+    if (!product)
+        return;
+
+
+    const existing =
+        cart.find(
+            item =>
+                item.id === productId
+        );
+
+
+    if (existing) {
+
+        existing.quantity =
+            Math.min(
+                existing.quantity +
+                quantity,
+
+                product.stock
+            );
+
+    }
+
+    else {
+
+        cart.push({
+
+            id: productId,
+
+            quantity:
+                Math.min(
+                    quantity,
+                    product.stock
+                )
+
+        });
+
+    }
+
+
+    saveCart();
+
+    updateCartUI();
+
+}
+
+
+function addToCart(
+    productId
+) {
+
+    addMultipleToCart(
+        productId,
+        1
+    );
+
+}
+
+
+/* =====================================================
+   MODAL ADD CART
+   ===================================================== */
 
 modalAddCart.addEventListener(
     "click",
@@ -746,91 +980,8 @@ modalAddCart.addEventListener(
 
 
 /* =====================================================
-   ADD MULTIPLE TO CART
+   REMOVE CART ITEM
    ===================================================== */
-
-function addMultipleToCart(
-    productId,
-    quantity
-) {
-
-    const product =
-        products.find(
-            item =>
-                item.id === productId
-        );
-
-    if (!product) return;
-
-
-    const existing =
-        cart.find(
-            item =>
-                item.id === productId
-        );
-
-
-    if (existing) {
-
-        const newQuantity =
-            existing.quantity +
-            quantity;
-
-
-        if (
-            newQuantity >
-            product.stock
-        ) {
-
-            existing.quantity =
-                product.stock;
-
-        } else {
-
-            existing.quantity =
-                newQuantity;
-
-        }
-
-    } else {
-
-        cart.push({
-
-            id: productId,
-
-            quantity:
-                Math.min(
-                    quantity,
-                    product.stock
-                )
-
-        });
-
-    }
-
-
-    saveCart();
-
-    updateCartUI();
-
-}
-
-
-/* =====================================================
-   CART
-   ===================================================== */
-
-function addToCart(productId) {
-
-    addMultipleToCart(
-        productId,
-        1
-    );
-
-    openCart();
-
-}
-
 
 function removeFromCart(
     productId
@@ -842,12 +993,17 @@ function removeFromCart(
                 item.id !== productId
         );
 
+
     saveCart();
 
     updateCartUI();
 
 }
 
+
+/* =====================================================
+   CHANGE CART QUANTITY
+   ===================================================== */
 
 function changeQuantity(
     productId,
@@ -860,17 +1016,20 @@ function changeQuantity(
                 item.id === productId
         );
 
+
     const product =
         products.find(
-            product =>
-                product.id === productId
+            item =>
+                item.id === productId
         );
+
 
     if (!item || !product)
         return;
 
 
-    item.quantity += change;
+    item.quantity +=
+        change;
 
 
     if (
@@ -904,17 +1063,23 @@ function changeQuantity(
 }
 
 
+/* =====================================================
+   SAVE CART
+   ===================================================== */
+
 function saveCart() {
 
     localStorage.setItem(
-        "vendavibeCart",
+        "vendaviveCart",
         JSON.stringify(cart)
     );
 
 }
 
 
-/* ================= CART COUNT ================= */
+/* =====================================================
+   CART COUNT
+   ===================================================== */
 
 function updateCartCount() {
 
@@ -926,8 +1091,10 @@ function updateCartCount() {
             ) =>
                 total +
                 item.quantity,
+
             0
         );
+
 
     cartCount.textContent =
         count;
@@ -935,7 +1102,9 @@ function updateCartCount() {
 }
 
 
-/* ================= CART TOTAL ================= */
+/* =====================================================
+   CART TOTAL
+   ===================================================== */
 
 function calculateCartTotal() {
 
@@ -952,23 +1121,29 @@ function calculateCartTotal() {
                         item.id
                 );
 
+
             if (!product)
                 return total;
 
+
             return (
                 total +
+
                 product.sellPrice *
                 item.quantity
             );
 
         },
+
         0
     );
 
 }
 
 
-/* ================= RENDER CART ================= */
+/* =====================================================
+   RENDER CART
+   ===================================================== */
 
 function renderCart() {
 
@@ -996,8 +1171,10 @@ function renderCart() {
 
         `;
 
+
         cartTotal.textContent =
             formatPrice(0);
+
 
         return;
 
@@ -1016,6 +1193,7 @@ function renderCart() {
                         product.id ===
                         item.id
                 );
+
 
             if (!product)
                 return;
@@ -1053,26 +1231,25 @@ function renderCart() {
                     ${
                         product.image
 
-                            ? `
-                                <img
-                                    src="${product.image}"
-                                    style="
-                                        width:100%;
-                                        height:100%;
-                                        object-fit:cover;
-                                    "
-                                    alt="${product.name}"
-                                >
-                            `
+                        ? `
+                            <img
+                                src="${product.image}"
+                                style="
+                                    width:100%;
+                                    height:100%;
+                                    object-fit:cover;
+                                "
+                            >
+                        `
 
-                            : `
-                                <span
-                                    style="
-                                        font-size:28px;
-                                    ">
-                                    🛍️
-                                </span>
-                            `
+                        : `
+                            <span
+                                style="
+                                    font-size:28px;
+                                ">
+                                🛍️
+                            </span>
+                        `
                     }
 
                 </div>
@@ -1164,9 +1341,7 @@ function renderCart() {
                         font-size:20px;
                     "
                 >
-
                     ×
-
                 </button>
 
             `;
@@ -1191,20 +1366,17 @@ function renderCart() {
                     "click",
                     () => {
 
-                        const id =
+                        changeQuantity(
+
                             Number(
                                 button.dataset.id
-                            );
+                            ),
 
-                        const change =
                             button.dataset.action ===
                                 "plus"
                                 ? 1
-                                : -1;
+                                : -1
 
-                        changeQuantity(
-                            id,
-                            change
                         );
 
                     }
@@ -1246,7 +1418,9 @@ function renderCart() {
 }
 
 
-/* ================= CART UI ================= */
+/* =====================================================
+   CART UI
+   ===================================================== */
 
 function updateCartUI() {
 
@@ -1257,7 +1431,9 @@ function updateCartUI() {
 }
 
 
-/* ================= CART OPEN ================= */
+/* =====================================================
+   CART OPEN / CLOSE
+   ===================================================== */
 
 function openCart() {
 
@@ -1292,6 +1468,606 @@ function closeCartDrawer() {
 
 
 /* =====================================================
+   ORDER MODAL
+   ===================================================== */
+
+function openOrderModal(
+    items
+) {
+
+    if (
+        !items ||
+        items.length === 0
+    ) {
+
+        alert(
+            "Your cart is empty."
+        );
+
+        return;
+
+    }
+
+
+    orderSummary.innerHTML = `
+
+        <div class="order-summary-title">
+
+            Order Summary
+
+        </div>
+
+    `;
+
+
+    let productTotal = 0;
+
+
+    items.forEach(
+        item => {
+
+            const product =
+                products.find(
+                    product =>
+                        product.id ===
+                        item.id
+                );
+
+
+            if (!product)
+                return;
+
+
+            const itemTotal =
+                product.sellPrice *
+                item.quantity;
+
+
+            productTotal +=
+                itemTotal;
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "order-summary-item";
+
+
+            row.innerHTML = `
+
+                <span>
+
+                    ${product.name}
+                    × ${item.quantity}
+
+                </span>
+
+
+                <strong>
+
+                    ${formatPrice(
+                        itemTotal
+                    )}
+
+                </strong>
+
+            `;
+
+
+            orderSummary.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    const deliveryBox =
+        document.createElement(
+            "div"
+        );
+
+
+    deliveryBox.innerHTML = `
+
+        <div
+            class="order-summary-item"
+            style="
+                margin-top:10px;
+                border-bottom:none;
+            ">
+
+            <span>
+                Delivery
+            </span>
+
+            <strong id="summaryDelivery">
+                Select location
+            </strong>
+
+        </div>
+
+
+        <div
+            class="delivery-options"
+            style="
+                display:flex;
+                flex-direction:column;
+                gap:8px;
+                margin-top:10px;
+            ">
+
+            <label style="
+                display:flex;
+                align-items:center;
+                gap:8px;
+                cursor:pointer;
+            ">
+
+                <input
+                    type="radio"
+                    name="deliveryLocation"
+                    value="inside"
+                >
+
+                <span>
+                    Inside Dhaka — ৳80
+                </span>
+
+            </label>
+
+
+            <label style="
+                display:flex;
+                align-items:center;
+                gap:8px;
+                cursor:pointer;
+            ">
+
+                <input
+                    type="radio"
+                    name="deliveryLocation"
+                    value="outside"
+                >
+
+                <span>
+                    Outside Dhaka — ৳150
+                </span>
+
+            </label>
+
+        </div>
+
+
+        <div
+            class="order-summary-total">
+
+            <span>
+                Grand Total
+            </span>
+
+            <strong id="summaryGrandTotal">
+                ${formatPrice(
+                    productTotal
+                )}
+            </strong>
+
+        </div>
+
+    `;
+
+
+    orderSummary.appendChild(
+        deliveryBox
+    );
+
+
+    orderModal.dataset.productTotal =
+        productTotal;
+
+
+    orderModal.classList.add(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function closeOrderForm() {
+
+    orderModal.classList.remove(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =====================================================
+   DELIVERY CALCULATION
+   ===================================================== */
+
+orderModal.addEventListener(
+    "change",
+    event => {
+
+        if (
+            event.target.name !==
+            "deliveryLocation"
+        ) {
+
+            return;
+
+        }
+
+
+        const productTotal =
+            Number(
+                orderModal.dataset.productTotal
+            );
+
+
+        const deliveryCharge =
+            event.target.value ===
+                "inside"
+
+                ? DELIVERY_CHARGE.insideDhaka
+
+                : DELIVERY_CHARGE.outsideDhaka;
+
+
+        const grandTotal =
+            productTotal +
+            deliveryCharge;
+
+
+        const deliveryElement =
+            document.getElementById(
+                "summaryDelivery"
+            );
+
+
+        const totalElement =
+            document.getElementById(
+                "summaryGrandTotal"
+            );
+
+
+        if (deliveryElement) {
+
+            deliveryElement.textContent =
+                formatPrice(
+                    deliveryCharge
+                );
+
+        }
+
+
+        if (totalElement) {
+
+            totalElement.textContent =
+                formatPrice(
+                    grandTotal
+                );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   OPEN ORDER FROM PRODUCT
+   ===================================================== */
+
+function orderSingleProduct() {
+
+    if (!selectedProduct)
+        return;
+
+
+    const items = [
+
+        {
+            id:
+                selectedProduct.id,
+
+            quantity:
+                modalQuantity
+
+        }
+
+    ];
+
+
+    closeProductDetails();
+
+    openOrderModal(
+        items
+    );
+
+}
+
+
+/* =====================================================
+   PRODUCT ORDER BUTTON
+   ===================================================== */
+
+modalOrder.addEventListener(
+    "click",
+    orderSingleProduct
+);
+
+
+/* =====================================================
+   CART CHECKOUT
+   ===================================================== */
+
+checkoutBtn.addEventListener(
+    "click",
+    () => {
+
+        if (
+            cart.length === 0
+        ) {
+
+            alert(
+                "Your cart is empty."
+            );
+
+            return;
+
+        }
+
+
+        closeCartDrawer();
+
+        openOrderModal(
+            cart
+        );
+
+    }
+);
+
+
+/* =====================================================
+   ORDER FORM SUBMIT
+   ===================================================== */
+
+orderForm.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+
+        const name =
+            customerName.value.trim();
+
+
+        const phone =
+            customerPhone.value.trim();
+
+
+        const address =
+            customerAddress.value.trim();
+
+
+        const delivery =
+            document.querySelector(
+                'input[name="deliveryLocation"]:checked'
+            );
+
+
+        if (!delivery) {
+
+            alert(
+                "Please select your delivery location."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            !name ||
+            !phone ||
+            !address
+        ) {
+
+            alert(
+                "Please complete all information."
+            );
+
+            return;
+
+        }
+
+
+        const items =
+            orderModal.dataset.items
+                ? JSON.parse(
+                    orderModal.dataset.items
+                )
+                : null;
+
+
+        let orderItems =
+            items;
+
+
+        /*
+           If order came from Product Details,
+           use the temporary product order.
+        */
+
+        if (
+            !orderItems ||
+            orderItems.length === 0
+        ) {
+
+            orderItems =
+                window.currentOrderItems;
+
+        }
+
+
+        if (
+            !orderItems ||
+            orderItems.length === 0
+        ) {
+
+            alert(
+                "Unable to find your order."
+            );
+
+            return;
+
+        }
+
+
+        let productTotal = 0;
+
+        let productText = "";
+
+
+        orderItems.forEach(
+            item => {
+
+                const product =
+                    products.find(
+                        product =>
+                            product.id ===
+                            item.id
+                    );
+
+
+                if (!product)
+                    return;
+
+
+                const itemTotal =
+                    product.sellPrice *
+                    item.quantity;
+
+
+                productTotal +=
+                    itemTotal;
+
+
+                productText +=
+                    `• ${product.name} × ${item.quantity} = ${formatPrice(itemTotal)}\n`;
+
+            }
+        );
+
+
+        const deliveryCharge =
+            delivery.value ===
+                "inside"
+
+                ? DELIVERY_CHARGE.insideDhaka
+
+                : DELIVERY_CHARGE.outsideDhaka;
+
+
+        const deliveryText =
+            delivery.value ===
+                "inside"
+
+                ? "Inside Dhaka"
+
+                : "Outside Dhaka";
+
+
+        const grandTotal =
+            productTotal +
+            deliveryCharge;
+
+
+        const message =
+
+`🛍️ *NEW ORDER — ${STORE_NAME}*
+
+👤 *Customer:* ${name}
+
+📞 *Phone:* ${phone}
+
+📦 *Products:*
+
+${productText}
+💰 *Product Total:* ${formatPrice(productTotal)}
+
+🚚 *Delivery:* ${deliveryText}
+
+💵 *Delivery Charge:* ${formatPrice(deliveryCharge)}
+
+━━━━━━━━━━━━━━
+
+💰 *GRAND TOTAL:* ${formatPrice(grandTotal)}
+
+📍 *Delivery Address:*
+
+${address}
+
+━━━━━━━━━━━━━━
+
+Please confirm my order.`;
+
+
+        const whatsappURL =
+            `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+
+        window.open(
+            whatsappURL,
+            "_blank"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   ORDER MODAL CLOSE
+   ===================================================== */
+
+closeOrderModal.addEventListener(
+    "click",
+    closeOrderForm
+);
+
+
+orderModal.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            orderModal
+        ) {
+
+            closeOrderForm();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
    SEARCH
    ===================================================== */
 
@@ -1303,6 +2079,7 @@ searchToggle.addEventListener(
             "active"
         );
 
+
         if (
             searchContainer.classList.contains(
                 "active"
@@ -1311,8 +2088,11 @@ searchToggle.addEventListener(
 
             setTimeout(
                 () => {
+
                     searchInput.focus();
+
                 },
+
                 200
             );
 
@@ -1382,7 +2162,8 @@ shopNow.addEventListener(
                 "productsSection"
             )
             .scrollIntoView({
-                behavior: "smooth"
+                behavior:
+                    "smooth"
             });
 
     }
@@ -1390,56 +2171,33 @@ shopNow.addEventListener(
 
 
 /* =====================================================
-   ORDER BUTTON — TEMPORARY
+   ORDER DATA FIX
    ===================================================== */
 
-modalOrder.addEventListener(
-    "click",
-    () => {
-
-        if (!selectedProduct)
-            return;
+const originalOpenOrderModal =
+    openOrderModal;
 
 
-        alert(
-            "WhatsApp Order System will be connected next."
+/*
+   Override function so order items
+   are remembered for submit.
+*/
+
+openOrderModal =
+    function(items) {
+
+        window.currentOrderItems =
+            items;
+
+        originalOpenOrderModal(
+            items
         );
 
-    }
-);
+    };
 
 
 /* =====================================================
-   CHECKOUT — TEMPORARY
-   ===================================================== */
-
-checkoutBtn.addEventListener(
-    "click",
-    () => {
-
-        if (
-            cart.length === 0
-        ) {
-
-            alert(
-                "Your cart is empty."
-            );
-
-            return;
-
-        }
-
-
-        alert(
-            "Checkout & WhatsApp Order System will be added next."
-        );
-
-    }
-);
-
-
-/* =====================================================
-   START WEBSITE
+   INITIALIZE
    ===================================================== */
 
 function initializeWebsite() {
